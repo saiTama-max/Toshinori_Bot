@@ -1,6 +1,7 @@
 # Toshinori_Bot
 A discord bot with basic fun features
 # How to run?
+Start by cloning this repo, this can be done by `git clone <url>` in your terminal, then
 create a `.env` file and then put the following variables in it- 
 ```
 TOKEN = discord bot token
