@@ -10,7 +10,8 @@ USERNAME = postgres db username
 PASSWORD = postgres db password
 DATABASE = postgres db name
 ```
-The Postgres credentials are optional, but it will be necessary for some commands to work
+The Postgres credentials are optional, but it will be necessary for some commands to work.
+
 After you have filled the `.env` file, install the pip requirements from the requirements.txt by running the commands `pip install -r requirements.txt` in your terminal (make sure to cd to the folder)
 
 Then you can run the bot by `python main.py`
