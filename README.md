@@ -14,4 +14,4 @@ The Postgres credentials are optional, but it will be necessary for some command
 
 After you have filled the `.env` file, install the pip requirements from the requirements.txt by running the commands `pip install -r requirements.txt` in your terminal (make sure to cd to the folder)
 
-Then you can run the bot by `python main.py`
+Then you can run the bot by `python __init__.py`
