@@ -13,7 +13,7 @@ class Help(commands.Cog):
 		prefix = self.bot.command_prefix
 
 		embed = Embed(
-		    title=f"{'-' * (char_repeat // 2)}Tanjiro Bot{'-' * (char_repeat // 2)}",
+		    title=f"{'-' * (char_repeat // 2)}Toshinori{'-' * (char_repeat // 2)}",
 		    color=color
 		)
 
