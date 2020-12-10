@@ -78,5 +78,18 @@ async def unload(ctx, *, modules):
 		await ctx.send(f":x: Cogs unloading unsuccessful, \n`{e}`")
 		raise e
 
+@toshi.event
+async def on_message(self, message):
+		empty_pings = ["Why are you pinging me for no reason lol",
+				 	   "Do you want something?",
+				 	   "<:pingree:786651403056709642>"]
+		if message.author == toshi.user:
+			return
+
+		if message.content == f"<@{toshi.id}>":
+			await message.channel.send(random.choice(empty_pings))
+		elif f"<@{toshi.id}>" in message.content:
+			await message.channel.send(f'{message.author.mention}{message.content.replace(f"<@{toshi.id}>", " ")}')
+		toshi.process_commands(message)
 TOKEN = os.getenv("TOKEN")
 toshi.run(TOKEN)

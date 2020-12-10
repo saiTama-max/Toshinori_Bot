@@ -279,20 +279,6 @@ class Fun(commands.Cog):
 			await ctx.send(embed=sps)
 		else:
 			await ctx.send("Postgres Database is not properly set")
-
-	@self.bot.event
-	async def on_message(self, message):
-		empty_pings = ["Why are you pinging me for no reason lol",
-				 	   "Do you want something?",
-				 	   "<:pingree:786651403056709642>"]
-		if message.author == self.bot.user:
-			return
-
-		if message.content == f"<@{self.bot.id}>":
-			await message.channel.send(random.choice(empty_pings))
-		elif f"<@{self.bot.id}>" in message.content:
-			await message.channel.send(f'{message.author.mention}{message.content.replace(f"<@{self.bot.id}>", " ")}')
-		self.bot.process_commands(message)
 		
 def setup(bot: commands.bot):
 	bot.add_cog(Fun(bot))
