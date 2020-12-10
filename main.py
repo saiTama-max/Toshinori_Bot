@@ -90,6 +90,6 @@ async def on_message(message):
 			await message.channel.send(random.choice(empty_pings))
 		elif f"<@{toshi.user.id}>" in message.content:
 			await message.channel.send(f'{message.author.mention}{message.content.replace(f"<@{toshi.user.id}>", " ")}')
-		toshi.process_commands(message)
+		await toshi.process_commands(message)
 TOKEN = os.getenv("TOKEN")
 toshi.run(TOKEN)
