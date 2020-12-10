@@ -14,7 +14,8 @@ class Help(commands.Cog):
 
 		embed = Embed(
 		    title=f"{'-' * (char_repeat // 2)}Toshinori{'-' * (char_repeat // 2)}",
-		    color=color
+		    color=color,
+		    url="https://github.com/saiTama-max/Toshinori_Bot"
 		)
 
 		if name is None:
