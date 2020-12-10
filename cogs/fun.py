@@ -291,7 +291,7 @@ class Fun(commands.Cog):
 		if message.content == f"<@{self.bot.id}>":
 			await message.channel.send(random.choice(empty_pings))
 		elif f"<@{self.bot.id}>" in message.content:
-			await message.channel.send(f"{message.author.mention}{message.content.replace(f"<@{self.bot.id}>", " ")}")
+			await message.channel.send(f'{message.author.mention}{message.content.replace(f"<@{self.bot.id}>", " ")}')
 		self.bot.process_commands(message)
 		
 def setup(bot: commands.bot):
