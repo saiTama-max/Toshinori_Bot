@@ -280,7 +280,7 @@ class Fun(commands.Cog):
 		else:
 			await ctx.send("Postgres Database is not properly set")
 
-	@discord.event
+	@self.bot.event
 	async def on_message(self, message):
 		empty_pings = ["Why are you pinging me for no reason lol",
 				 	   "Do you want something?",
