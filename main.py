@@ -79,7 +79,7 @@ async def unload(ctx, *, modules):
 		raise e
 
 @toshi.event
-async def on_message(self, message):
+async def on_message(message):
 		empty_pings = ["Why are you pinging me for no reason lol",
 				 	   "Do you want something?",
 				 	   "<:pingree:786651403056709642>"]
