@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import os
 import dotenv
+import random
 
 dotenv.load_dotenv()
 intents = discord.Intents.all()
@@ -80,16 +81,26 @@ async def unload(ctx, *, modules):
 
 @toshi.event
 async def on_message(message):
+	try:
+		nous = ["nou", 'no u', 'no you', "no yu", "noyou"]
 		empty_pings = ["Why are you pinging me for no reason lol",
 				 	   "Do you want something?",
 				 	   "<:pingree:786651403056709642>"]
 		if message.author == toshi.user:
 			return
 
-		if message.content == f"<@{toshi.user.id}>":
+		if message.content == f"<@!{toshi.user.id}>":
 			await message.channel.send(random.choice(empty_pings))
-		elif f"<@{toshi.user.id}>" in message.content:
-			await message.channel.send(f'{message.author.mention}{message.content.replace(f"<@{toshi.user.id}>", " ")}')
+		elif f"<@!{toshi.user.id}>" in message.content:
+			await message.channel.send(str(message.content).replace(f"<@!{toshi.user.id}>", message.author.mention))
 		await toshi.process_commands(message)
+
+		if any(message.content.lower() == i for i in nous):
+			await message.add_reaction("🇳")
+			await message.add_reaction(random.choice(["🇴", "🅾️"]))
+			await message.add_reaction("🇺")
+	except Exception as e:
+		print(e)
+
 TOKEN = os.getenv("TOKEN")
 toshi.run(TOKEN)
