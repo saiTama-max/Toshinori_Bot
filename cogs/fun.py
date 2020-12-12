@@ -16,7 +16,6 @@ USERNAME = os.getenv("USERNAME")
 HOST = os.getenv("HOST")
 DATABASE = os.getenv("DATABASE")
 PASSWORD = os.getenv("PASSWORD")
-credentials = [USERNAME, HOST, DATABASE, PASSWORD]
 common_qui = ['Engine', 'Voice', 'Gigantification', 'Hardening', 
     'Jet', 'Regeneration', 'Zero Gravity', 'Somnambulist', 'Navel Laser', 'Tail']
 uncommon_qui = ['Air Propulsion', 'Electric', 'Shock Absorption', 'Warp gate',
@@ -33,7 +32,9 @@ async def main():
 					quirk text,
 					spins integer,
 					userid bigint,
-					current timestamptz)""")
+					current timestamptz,
+					messages integer,
+					guild bigint)""")
 		return conn
 	except:
 		return False

@@ -9,6 +9,16 @@ import numpy as np
 from PIL import Image
 import datetime
 from dateutil.relativedelta import relativedelta
+import asyncpg
+from cogs.fun import USERNAME, HOST, DATABASE, PASSWORD
+
+async def main():
+	try:
+		conn = await asyncpg.connect(user=USERNAME, password=PASSWORD,
+									database=DATABASE, host=HOST)
+		return conn
+	except:
+		return False
 
 QUOTES = [
     "Get busy living or get busy dying.",
@@ -160,9 +170,57 @@ class Utility(commands.Cog):
 			await ctx.send(embed=info_emb)
 		except Exception as e:
 			print(e)
+	@commands.Cog.listener()
+	async def on_message(self, message):
+		if message.author == self.bot.user:
+			return
+		conn = await main()
+		try:
+			if conn:
+				check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", message.author.id)
+				
+				
+				if not check:
+					await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
+								 	   message.author.id, message.guild.id)
+				
+				else:
+					msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1", message.author.id)
+					msg_count = list(msg_count.values())[0]
+					msg_count += 1
+					await conn.execute("UPDATE quirks SET guild=$2, messages=$3 WHERE userid=$1",
+								 message.author.id, message.guild.id, msg_count)
+				await conn.close()
+		except Exception as e:
+			print(e)
+		
 
+	@commands.command(brief="Show the top for people with the most messages in a guild",
+					  usage="t!top",
+					  aliases=('lb', 'leaderboard'))
+	async def top(self, ctx):
+		conn = await main()
+		msgs = await conn.fetch("SELECT userid, messages FROM quirks WHERE guild=$1", ctx.guild.id)
+		msgs = set(msgs)
+		m_count = dict()
+		for i in msgs:
+			m_count.update({str(self.bot.get_user(list(i.values())[0])): list(i.values())[1]})
+		m_count = {k: m_count[k] for k in sorted(m_count, key=lambda y: m_count[y])}
+		msg_count = tuple(m_count.values())[::-1]
+		name = tuple(m_count.keys())[::-1]
 
-
+		fin = []
+		c = 1
+		
+		for i in range(10):
+			try:
+				fin.append(f"{c}. {name[i]}{' '*(25-len(name[i]))} - {msg_count[i]}")
+				c += 1
+			except:
+				continue
+		fin = "\n".join(fin)
+		await ctx.send(f"```css\n{fin}```")
+		await conn.close()
 
 def setup(bot: commands.bot):
 	bot.add_cog(Utility(bot))
