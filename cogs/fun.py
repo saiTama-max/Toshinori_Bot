@@ -43,7 +43,7 @@ class Fun(commands.Cog):
 	def __init__(self, bot: commands.bot):
 		self.bot = bot
 
-	@commands.command(aliases=['8ball'],
+	@commands.command(aliases=['eightball', '8b'],
 					  brief='you can get answers to questions in 8ball', usage='t!8ball [question]')
 	async def _8ball(self, ctx, *, question):
 	    responses = [
@@ -241,7 +241,7 @@ class Fun(commands.Cog):
 				spins = list(spins.values())[0] if spins else 0
 				await conn.execute("INSERT INTO quirks(current, userid, spins) VALUES($1, $2, $3)",
 								now, ctx.author.id, s_count)
-				message = "Here are your spins!,\nCome back tomorrow!"
+				message = f"Here are your spins!{ctx.author.mention}, Come back tomorrow!"
 				desc = f"You received {s_count} spins and now have a total of {spins+s_count} spins!"
 				check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", ctx.author.id)
 			if not when_added and check:
