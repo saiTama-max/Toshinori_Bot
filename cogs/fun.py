@@ -241,7 +241,7 @@ class Fun(commands.Cog):
 				spins = list(spins.values())[0] if spins else 0
 				await conn.execute("INSERT INTO quirks(current, userid, spins) VALUES($1, $2, $3)",
 								now, ctx.author.id, s_count)
-				message = f"Here are your spins!{ctx.author.mention}, Come back tomorrow!"
+				message = f"Here are your spins!, Come back tomorrow!"
 				desc = f"You received {s_count} spins and now have a total of {spins+s_count} spins!"
 				check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", ctx.author.id)
 			if not when_added and check:
@@ -257,12 +257,12 @@ class Fun(commands.Cog):
 					message = "Here are your spins!,\nCome back tomorrow!"
 					desc = f"You received {s_count} spins and now have a total of {spins+s_count} spins!"
 				else:
-					message = f"{ctx.author.mention} You already claimed your spins for today~"
+					message = f"You already claimed your spins for today~"
 					desc = f"Come back in {23 - delta.seconds//3600} hours and {(60-(delta.seconds%3600)//60)} minutes"
 			emb.title = message
 			emb.description = desc
 			emb.color = discord.Color.blurple()
-			await ctx.send(embed=emb)
+			await ctx.send(ctx.author.mention, embed=emb)
 		else:
 			await ctx.send("Postgres Database is not properly set")
 
