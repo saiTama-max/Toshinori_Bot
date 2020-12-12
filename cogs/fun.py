@@ -257,7 +257,7 @@ class Fun(commands.Cog):
 					message = "Here are your spins!,\nCome back tomorrow!"
 					desc = f"You received {s_count} spins and now have a total of {spins+s_count} spins!"
 				else:
-					message = "You already claimed your spins for today~"
+					message = f"{ctx.author.mention} You already claimed your spins for today~"
 					desc = f"Come back in {23 - delta.seconds//3600} hours and {(60-(delta.seconds%3600)//60)} minutes"
 			emb.title = message
 			emb.description = desc
