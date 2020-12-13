@@ -185,11 +185,18 @@ class Utility(commands.Cog):
 								 	   message.author.id, message.guild.id)
 				
 				else:
+					guild = await conn.fetch("SELECT guild FROM quirks WHERE userid=$1", message.author.id)
+					guild = list(guild.values())
+					print(guild)
 					msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1", message.author.id)
 					msg_count = list(msg_count.values())[0]
 					msg_count += 1
-					await conn.execute("UPDATE quirks SET guild=$2, messages=$3 WHERE userid=$1",
-								 message.author.id, message.guild.id, msg_count)
+					if message.guild.id in guild:
+						await conn.execute("UPDATE quirks SET messages=$3 WHERE userid=$1, guild=$2",
+									 message.author.id, message.guild.id, msg_count)
+					else:
+						await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
+								 	   message.author.id, message.guild.id)
 				await conn.close()
 		except Exception as e:
 			print(e)
