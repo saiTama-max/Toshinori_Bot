@@ -32,7 +32,8 @@ async def main():
 					guild bigint,
 					yen bigint)""")
 		return conn
-	except:
+	except Exception as e:
+		print(e)
 		return False
 
 common_qui = ['Engine', 'Voice', 'Gigantification', 'Hardening', 
@@ -387,9 +388,8 @@ class Currency(commands.Cog):
 			print(e)
 
 	@commands.command(brief="Buy an item available in the shop", usage="t!buy [item]")
-	async def buy(self, ctx, amount: int=None, *, item):
+	async def buy(self, ctx, amount: int, *, item):
 		try:
-			amount = 1 if not amount else amount
 			conn = await main()
 			item = item.lower().strip("s")
 			yen_count = await conn.fetchrow("SELECT yen FROM quirks WHERE userid=$1", ctx.author.id)
