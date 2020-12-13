@@ -402,7 +402,7 @@ class Currency(commands.Cog):
 					spin_count = await conn.fetchrow("SELECT c_spins FROM quirks WHERE userid=$1", ctx.author.id)
 					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
 					if yen_count >= shop_items[item] * amount:
-						new_yen = yen_count - shop_items[item]
+						new_yen = yen_count - amount * shop_items[item]
 						await conn.execute("UPDATE quirks SET yen=$1, c_spins=$3 WHERE userid=$2",
 						 				   new_yen, ctx.author.id, spin_count+amount)
 						await ctx.send(f"You bought {amount} common spins for {shop_items[item] * amount} yen")
@@ -413,7 +413,7 @@ class Currency(commands.Cog):
 					spin_count = await conn.fetchrow("SELECT uc_spins FROM quirks WHERE userid=$1", ctx.author.id)
 					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
 					if yen_count >= shop_items[item] * amount:
-						new_yen = yen_count - shop_items[item]
+						new_yen = yen_count - amount * shop_items[item]
 						await conn.execute("UPDATE quirks SET yen=$1, uc_spins=$3 WHERE userid=$2",
 						 				   new_yen, ctx.author.id, spin_count+amount)
 						await ctx.send(f"You bought {amount} uncommon spins for {shop_items[item] * amount} yen")
@@ -424,7 +424,7 @@ class Currency(commands.Cog):
 					spin_count = await conn.fetchrow("SELECT r_spins FROM quirks WHERE userid=$1", ctx.author.id)
 					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
 					if yen_count >= shop_items[item] * amount:
-						new_yen = yen_count - shop_items[item]
+						new_yen = yen_count - amount * shop_items[item]
 						await conn.execute("UPDATE quirks SET yen=$1, r_spins=$3 WHERE userid=$2",
 						 				   new_yen, ctx.author.id, spin_count+amount)
 						await ctx.send(f"You bought {amount} rare spins for {shop_items[item] * amount} yen")
