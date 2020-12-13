@@ -178,28 +178,26 @@ class Utility(commands.Cog):
 		try:
 			if conn:
 				check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", message.author.id)
-				
-				
 				if not check:
 					await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
 								 	   message.author.id, message.guild.id)
 				
 				else:
 					guild = await conn.fetch("SELECT guild FROM quirks WHERE userid=$1", message.author.id)
-					guild = [i.values() for i in guild]
-					print(guild)
-					msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1", message.author.id)
+					guild = [list(i.values()) for i in guild]
+					msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1 AND guild=$2",
+													message.author.id, message.guild.id)
 					msg_count = list(msg_count.values())[0]
 					msg_count += 1
-					if message.guild.id in guild:
-						await conn.execute("UPDATE quirks SET messages=$3 WHERE userid=$1, guild=$2",
+					if [message.guild.id] in guild:
+						await conn.execute("UPDATE quirks SET messages=$3 WHERE userid=$1 AND guild=$2",
 									 message.author.id, message.guild.id, msg_count)
 					else:
 						await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
 								 	   message.author.id, message.guild.id)
 				await conn.close()
 		except Exception as e:
-			print(e)
+			raise e
 		
 
 	@commands.command(brief="Show the top for people with the most messages in a guild",
@@ -227,6 +225,12 @@ class Utility(commands.Cog):
 				continue
 		fin = "\n".join(fin)
 		await ctx.send(f"```css\n{fin}```")
+		await conn.close()
+	@commands.command()
+	@commands.has_permissions(administrator=True)
+	async def clear(self, ctx):
+		conn = await main()
+		await conn.execute("DROP TABLE quirks")
 		await conn.close()
 
 def setup(bot: commands.bot):
