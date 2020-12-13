@@ -186,7 +186,7 @@ class Utility(commands.Cog):
 				
 				else:
 					guild = await conn.fetch("SELECT guild FROM quirks WHERE userid=$1", message.author.id)
-					guild = list(guild.values())
+					guild = [i.values() for i in guild]
 					print(guild)
 					msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1", message.author.id)
 					msg_count = list(msg_count.values())[0]
