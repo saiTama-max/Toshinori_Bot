@@ -10,7 +10,7 @@ from PIL import Image
 import datetime
 from dateutil.relativedelta import relativedelta
 import asyncpg
-from cogs.fun import USERNAME, HOST, DATABASE, PASSWORD
+from cogs.currency import USERNAME, HOST, DATABASE, PASSWORD
 
 async def main():
 	try:
@@ -187,7 +187,10 @@ class Utility(commands.Cog):
 					guild = [list(i.values()) for i in guild]
 					msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1 AND guild=$2",
 													message.author.id, message.guild.id)
-					msg_count = list(msg_count.values())[0]
+					if msg_count:
+						msg_count = list(msg_count.values())[0] if list(msg_count.values())[0] else 0
+					else:
+						msg_count = 0
 					msg_count += 1
 					if [message.guild.id] in guild:
 						await conn.execute("UPDATE quirks SET messages=$3 WHERE userid=$1 AND guild=$2",
@@ -195,9 +198,9 @@ class Utility(commands.Cog):
 					else:
 						await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
 								 	   message.author.id, message.guild.id)
-				await conn.close()
+				# await conn.close()
 		except Exception as e:
-			raise e
+			print(e)
 		
 
 	@commands.command(brief="Show the top for people with the most messages in a guild",
@@ -225,13 +228,13 @@ class Utility(commands.Cog):
 				continue
 		fin = "\n".join(fin)
 		await ctx.send(f"```css\n{fin}```")
-		await conn.close()
-	@commands.command()
-	@commands.has_permissions(administrator=True)
-	async def clear(self, ctx):
-		conn = await main()
-		await conn.execute("DROP TABLE quirks")
-		await conn.close()
+		# await conn.close()
+	# @commands.command()
+	# @commands.has_permissions(administrator=True)
+	# async def clear(self, ctx):
+	# 	conn = await main()
+	# 	await conn.execute("DROP TABLE quirks")
+	# 	await conn.close()
 
 def setup(bot: commands.bot):
 	bot.add_cog(Utility(bot))
