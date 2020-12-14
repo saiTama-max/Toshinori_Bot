@@ -477,6 +477,9 @@ class Currency(commands.Cog):
 					await ctx.send("Invalid Item")
 				else:
 					yen_count = list(yen_count.values())[0] if yen_count else 0
+
+					if not yen_count:
+						yen_count = 0
 					
 					if item == "common spin":
 						spin_count = await conn.fetchrow("SELECT c_spins FROM quirks WHERE userid=$1", ctx.author.id)

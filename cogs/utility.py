@@ -262,7 +262,10 @@ class Utility(commands.Cog):
 				except:
 					continue
 			fin = "\n".join(fin)
-			await ctx.send(f"```css\n{fin}```")
+			if fin:
+				await ctx.send(f"```css\n{fin}```")
+			else:
+				await ctx.send("No messages yet")
 		# await conn.close()
 
 def setup(bot: commands.bot):
