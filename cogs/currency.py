@@ -301,7 +301,7 @@ class Currency(commands.Cog):
 					emb.set_author(icon_url=user.avatar_url, name=f"{str(user.name)}'s Quirk-")
 
 					if not q:
-						desc = "User hasn't spinned for a quirk yet, use `t!spin` to spin"
+						desc = "User hasn't spinned for a quirk yet, use `t!spin [category]` to spin"
 						color = discord.Color.blurple()
 
 					elif q in common_qui:
@@ -448,7 +448,7 @@ class Currency(commands.Cog):
 			shop_emb = discord.Embed(title=":moneybag: Shop :moneybag:", color=random.choice(colors))
 			for i in shop_items_dict_:
 				shop_emb.add_field(name=i, value=shop_items_dict_[i], inline=False)
-			shop_emb.description = "Use `t!buy [item]` to buy an item"
+			shop_emb.description = "Use `t!buy [amount] [item]` to buy an item"
 			await ctx.send(embed=shop_emb)
 		except Exception as e:
 			print(e)
