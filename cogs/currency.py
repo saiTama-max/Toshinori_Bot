@@ -533,7 +533,16 @@ class Currency(commands.Cog):
 			try:
 				user = ctx.author if not user else user
 				yen_left = await conn.fetchrow("SELECT yen FROM quirks WHERE userid=$1", user.id)
-				yen_left = list(yen_left.values())[0] if list(yen_left.values())[0] else 0
+				yen_left = list(yen_left.values())[0] if yen_left else 0
+				
+				if not user or user not in ctx.guild.members:
+					await ctx.send("Invalid user")
+					return
+				if not yen_left:
+					yen_left = 0
+					await conn.execute("INSERT INTO quirks(userid, yen) VALUES($1, $2)", user.id, 0)
+
+
 				yen_emb = discord.Embed(title=f"{user.name}'s wallet", color=user.color)
 				yen_emb.description = f"Yen amount: {yen_left} ¥"
 				yen_emb.set_footer(text="Use t!daily to get more yen daily") 
