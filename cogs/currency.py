@@ -541,5 +541,45 @@ class Currency(commands.Cog):
 			except Exception as e:
 				print(e)
 
+	@commands.command(brief="Donate some yen to a person", usage="t!donate [user] [amount]", aliases=("give", "don"))
+	async def donate(self, ctx, user: discord.Member, amount: int):
+		async with self.db as conn:
+			await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
+				username text,
+				quirk text,
+				c_spins integer,
+				uc_spins integer,
+				r_spins integer,
+				userid bigint,
+				current timestamptz,
+				messages integer,
+				guild bigint,
+				yen bigint)""")
+			if not user or user not in ctx.guild.members:
+				await ctx.send("Invalid user")
+				return
+			if amount < 1:
+				await ctx.send("Amount cannot be less than 1")
+				return
+			author_amount = await conn.fetchrow("SELECT yen FROM quirks WHERE userid=$1", ctx.author.id)
+			user_amount = await conn.fetchrow("SELECT yen FROM quirks WHERE userid=$1", user.id)
+			author_amount = list(author_amount.values())[0] if author_amount else 0
+			user_amount = list(user_amount.values())[0] if user_amount else 0
+			if not user_amount:
+				user_amount = 0
+				await conn.execute("INSERT INTO quirks(userid, yen) VALUES($1, $2)", user.id, 0)
+			if not author_amount:
+				author_amount = 0
+				await conn.execute("INSERT INTO quirks(userid, yen) VALUES($1, $2)", ctx.author.id, 0)
+
+			if author_amount < amount:
+				await ctx.send("You don't have that much yen to give")
+				return
+			await conn.execute("UPDATE quirks SET yen=$1 WHERE userid=$2", amount + user_amount, user.id)
+			await conn.execute("UPDATE quirks SET yen=$1 WHERE userid=$2", author_amount - amount, ctx.author.id)
+
+			await ctx.send(f"You gave {user.name} **{amount}**¥ yen, now you have {author_amount - amount} and they have {user_amount + amount}")
+
+
 def setup(bot: commands.bot):
 	bot.add_cog(Currency(bot))
