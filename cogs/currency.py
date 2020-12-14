@@ -20,7 +20,7 @@ common_qui = ['Engine', 'Voice', 'Gigantification', 'Hardening',
     'Jet', 'Regeneration', 'Zero Gravity', 'Somnambulist', 'Navel Laser', 'Tail']
 uncommon_qui = ['Air Propulsion', 'Electric', 'Shock Absorption', 'Warp gate',
     'Black hole', 'Permeation', 'Pop Off', 'Acid', 'Clones', "Copy"]
-rare_qui = ['Dark Shadow', 'Cremation', 'Quirkless', 'Muscle Augmentation', 'Decay', 'Creation', 'Frog']
+rare_qui = ['Dark Shadow', 'Cremation', 'Muscle Augmentation', 'Decay', 'Creation', 'Frog']
 legend_qui = ['AFO', 'OFA', 'HHHC', 'Explosion', 'Overhaul', 'Fierce Wings', 'Hell flame']
 
 shop_items = {"common spin": 3000, "uncommon spin": 50000, "rare spin": 150000}
