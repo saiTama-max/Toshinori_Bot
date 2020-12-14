@@ -456,6 +456,9 @@ class Currency(commands.Cog):
 	@commands.command(brief="Buy an item available in the shop", usage="t!buy [item]")
 	async def buy(self, ctx, amount: int, *, item):
 		async with self.db as conn:
+			if amount < 1:
+				await ctx.send("Nice try :p")
+				return
 			await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
 				username text,
 				quirk text,
