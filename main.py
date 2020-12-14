@@ -84,9 +84,11 @@ async def unload(ctx, *, modules):
 async def on_message(message):
 	try:
 		nous = ["nou", 'no u', 'no you', "no yu", "noyou"]
+		mention_spam = [ctx.author.mention for _ in range(random.randint(3, 6))]
 		empty_pings = ["Why are you pinging me for no reason lol",
 				 	   "Do you want something?",
-				 	   "<:pingree:786651403056709642>"]
+				 	   "<:pingree:786651403056709642>",
+				 	   f"Oh you think that's fun? {' '.join(mention_spam)}"]
 		if message.author == toshi.user:
 			return
 
