@@ -10,7 +10,7 @@ from PIL import Image
 import datetime
 from dateutil.relativedelta import relativedelta
 import asyncpg
-from cogs.currency import USERNAME, HOST, DATABASE, PASSWORD
+# from cogs.currency import USERNAME, HOST, DATABASE, PASSWORD
 import asyncio
 from matplotlib import pyplot as plt
 
@@ -43,22 +43,22 @@ QUOTES = [
     "I didn't fail the test. I just found 100 ways to do it wrong."]
 
 
-class Database:
-    def __init__(self):
-        self.conn = None
-        self.lock = asyncio.Lock()
-        loop = asyncio.get_event_loop()
-        loop.create_task(self.connect())
+# class Database:
+#     def __init__(self):
+#         self.conn = None
+#         self.lock = asyncio.Lock()
+#         loop = asyncio.get_event_loop()
+#         loop.create_task(self.connect())
 
-    async def connect(self):
-         self.conn = await asyncpg.connect(host=HOST, user=USERNAME, database=DATABASE, password=PASSWORD)
+#     async def connect(self):
+#          self.conn = await asyncpg.connect(host=HOST, user=USERNAME, database=DATABASE, password=PASSWORD)
 
-    async def __aenter__(self):
-        await self.lock.acquire()
-        return self.conn
+#     async def __aenter__(self):
+#         await self.lock.acquire()
+#         return self.conn
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        self.lock.release()
+#     async def __aexit__(self, exc_type, exc_val, exc_tb):
+#         self.lock.release()
 
 class Utility(commands.Cog):
 
@@ -153,150 +153,150 @@ class Utility(commands.Cog):
             await ctx.send(embed=info_emb)
         except Exception as e:
             print(e)
-    db = Database()
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        async with self.db as conn:
-            await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
-                username text,
-                quirk text,
-                c_spins integer,
-                uc_spins integer,
-                r_spins integer,
-                userid bigint,
-                current timestamptz,
-                messages integer,
-                guild bigint,
-                yen bigint)""")
+    # db = Database()
+    # @commands.Cog.listener()
+    # async def on_message(self, message):
+    #     async with self.db as conn:
+    #         await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
+    #             username text,
+    #             quirk text,
+    #             c_spins integer,
+    #             uc_spins integer,
+    #             r_spins integer,
+    #             userid bigint,
+    #             current timestamptz,
+    #             messages integer,
+    #             guild bigint,
+    #             yen bigint)""")
 
-            if message.author == self.bot.user:
-                return
-            try:
-                if conn:
-                    check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", message.author.id)
-                    if not check:
-                        await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
-                                           message.author.id, message.guild.id)
+    #         if message.author == self.bot.user:
+    #             return
+    #         try:
+    #             if conn:
+    #                 check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", message.author.id)
+    #                 if not check:
+    #                     await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
+    #                                        message.author.id, message.guild.id)
                     
-                    else:
-                        guild = await conn.fetch("SELECT guild FROM quirks WHERE userid=$1", message.author.id)
-                        guild = [list(i.values()) for i in guild]
-                        msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1 AND guild=$2",
-                                                        message.author.id, message.guild.id)
-                        if msg_count:
-                            msg_count = list(msg_count.values())[0] if list(msg_count.values())[0] else 0
-                        else:
-                            msg_count = 0
-                        msg_count += 1
-                        if [message.guild.id] in guild:
-                            await conn.execute("UPDATE quirks SET messages=$3 WHERE userid=$1 AND guild=$2",
-                                         message.author.id, message.guild.id, msg_count)
-                        else:
-                            await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
-                                           message.author.id, message.guild.id)
-                    # await conn.close()
-            except Exception as e:
-                print(e)
+    #                 else:
+    #                     guild = await conn.fetch("SELECT guild FROM quirks WHERE userid=$1", message.author.id)
+    #                     guild = [list(i.values()) for i in guild]
+    #                     msg_count = await conn.fetchrow("SELECT messages FROM quirks WHERE userid=$1 AND guild=$2",
+    #                                                     message.author.id, message.guild.id)
+    #                     if msg_count:
+    #                         msg_count = list(msg_count.values())[0] if list(msg_count.values())[0] else 0
+    #                     else:
+    #                         msg_count = 0
+    #                     msg_count += 1
+    #                     if [message.guild.id] in guild:
+    #                         await conn.execute("UPDATE quirks SET messages=$3 WHERE userid=$1 AND guild=$2",
+    #                                      message.author.id, message.guild.id, msg_count)
+    #                     else:
+    #                         await conn.execute("INSERT INTO quirks(userid, guild, messages) VALUES($1, $2, 1)",
+    #                                        message.author.id, message.guild.id)
+    #                 # await conn.close()
+    #         except Exception as e:
+    #             print(e)
             
 
-    @commands.command(brief="Show the top for people with the most messages in a guild",
-                      usage="t!top",
-                      aliases=('lb', 'leaderboard'))
-    async def top(self, ctx):
-        async with self.db as conn:
-            await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
-                username text,
-                quirk text,
-                c_spins integer,
-                uc_spins integer,
-                r_spins integer,
-                userid bigint,
-                current timestamptz,
-                messages integer,
-                guild bigint,
-                yen bigint)""")
-            msgs = await conn.fetch("SELECT userid, messages FROM quirks WHERE guild=$1", ctx.guild.id)
-            msgs = set(msgs)
-            m_count = dict()
-            for i in msgs:
-                m_count.update({str(self.bot.get_user(list(i.values())[0])): list(i.values())[1]})
-            m_count = {k: m_count[k] for k in sorted(m_count, key=lambda y: m_count[y])}
-            msg_count = tuple(m_count.values())[::-1]
-            name = tuple(m_count.keys())[::-1]
+    # @commands.command(brief="Show the top for people with the most messages in a guild",
+    #                   usage="t!top",
+    #                   aliases=('lb', 'leaderboard'))
+    # async def top(self, ctx):
+    #     async with self.db as conn:
+    #         await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
+    #             username text,
+    #             quirk text,
+    #             c_spins integer,
+    #             uc_spins integer,
+    #             r_spins integer,
+    #             userid bigint,
+    #             current timestamptz,
+    #             messages integer,
+    #             guild bigint,
+    #             yen bigint)""")
+    #         msgs = await conn.fetch("SELECT userid, messages FROM quirks WHERE guild=$1", ctx.guild.id)
+    #         msgs = set(msgs)
+    #         m_count = dict()
+    #         for i in msgs:
+    #             m_count.update({str(self.bot.get_user(list(i.values())[0])): list(i.values())[1]})
+    #         m_count = {k: m_count[k] for k in sorted(m_count, key=lambda y: m_count[y])}
+    #         msg_count = tuple(m_count.values())[::-1]
+    #         name = tuple(m_count.keys())[::-1]
 
-            fin = []
-            c = 1
+    #         fin = []
+    #         c = 1
             
-            for i in range(10):
-                try:
-                    fin.append(f"{c}. {name[i]}{' '*(25-len(name[i]))} - {msg_count[i]}")
-                    c += 1
-                except:
-                    continue
-            fin = "\n".join(fin)
-            if fin:
-                await ctx.send(f"```css\n{fin}```")
-            else:
-                await ctx.send("No messages yet")
+    #         for i in range(10):
+    #             try:
+    #                 fin.append(f"{c}. {name[i]}{' '*(25-len(name[i]))} - {msg_count[i]}")
+    #                 c += 1
+    #             except:
+    #                 continue
+    #         fin = "\n".join(fin)
+    #         if fin:
+    #             await ctx.send(f"```css\n{fin}```")
+    #         else:
+    #             await ctx.send("No messages yet")
     
-    @commands.command(brief="Get a graph based on the top messages in the guild",
-                      usage="t!graph",
-                      aliases=("topg", "topgraph", "tgraph"))
-    async def graph(self, ctx):
-        try:
-            async with self.db as conn:
-                await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
-                    username text,
-                    quirk text,
-                    c_spins integer,
-                    uc_spins integer,
-                    r_spins integer,
-                    userid bigint,
-                    current timestamptz,
-                    messages integer,
-                    guild bigint,
-                    yen bigint)""")
-                msgs = await conn.fetch("SELECT userid, messages FROM quirks WHERE guild=$1", ctx.guild.id)
-                msgs = set(msgs)
-                m_count = dict()
-                for i in msgs:
-                    m_count.update({str(self.bot.get_user(list(i.values())[0])): list(i.values())[1]})
-                m_count = {k: m_count[k] for k in sorted(m_count, key=lambda y: m_count[y])}
-                msg_count_y = list(m_count.values())[::-1]
-                name_x = list(m_count.keys())[::-1]
+    # @commands.command(brief="Get a graph based on the top messages in the guild",
+    #                   usage="t!graph",
+    #                   aliases=("topg", "topgraph", "tgraph"))
+    # async def graph(self, ctx):
+    #     try:
+    #         async with self.db as conn:
+    #             await conn.execute("""CREATE TABLE IF NOT EXISTS quirks (
+    #                 username text,
+    #                 quirk text,
+    #                 c_spins integer,
+    #                 uc_spins integer,
+    #                 r_spins integer,
+    #                 userid bigint,
+    #                 current timestamptz,
+    #                 messages integer,
+    #                 guild bigint,
+    #                 yen bigint)""")
+    #             msgs = await conn.fetch("SELECT userid, messages FROM quirks WHERE guild=$1", ctx.guild.id)
+    #             msgs = set(msgs)
+    #             m_count = dict()
+    #             for i in msgs:
+    #                 m_count.update({str(self.bot.get_user(list(i.values())[0])): list(i.values())[1]})
+    #             m_count = {k: m_count[k] for k in sorted(m_count, key=lambda y: m_count[y])}
+    #             msg_count_y = list(m_count.values())[::-1]
+    #             name_x = list(m_count.keys())[::-1]
 
-                # plt.style.use("fivethirtyeight")
-                fig, ax = plt.subplots(figsize =(16, 9))
+    #             # plt.style.use("fivethirtyeight")
+    #             fig, ax = plt.subplots(figsize =(16, 9))
 
-                ax.barh(name_x, msg_count_y, color="#444444", edgecolor="#817E7E")
-                for s in ['top', 'bottom', 'left', 'right']:
-                    ax.spines[s].set_visible(False)
+    #             ax.barh(name_x, msg_count_y, color="#444444", edgecolor="#817E7E")
+    #             for s in ['top', 'bottom', 'left', 'right']:
+    #                 ax.spines[s].set_visible(False)
 
-                ax.xaxis.set_ticks_position('none')
-                ax.yaxis.set_ticks_position('none')
+    #             ax.xaxis.set_ticks_position('none')
+    #             ax.yaxis.set_ticks_position('none')
 
-                ax.grid(b=True, color='#545454',
-                        linestyle='-.', linewidth=0.5,
-                        alpha=0.2)
+    #             ax.grid(b=True, color='#545454',
+    #                     linestyle='-.', linewidth=0.5,
+    #                     alpha=0.2)
 
-                ax.invert_yaxis()
+    #             ax.invert_yaxis()
 
-                for i in ax.patches:
-                    plt.text(i.get_width() + 20, i.get_y() + 0.5,
-                             str(round((i.get_width()), 2)),
-                             fontsize=12, fontweight='bold',
-                             color='grey')
-                plt.title(f"Top messages in {ctx.guild.name}")
-                plt.ylabel("Names")
-                plt.xlabel("Message count")
+    #             for i in ax.patches:
+    #                 plt.text(i.get_width() + 20, i.get_y() + 0.5,
+    #                          str(round((i.get_width()), 2)),
+    #                          fontsize=12, fontweight='bold',
+    #                          color='grey')
+    #             plt.title(f"Top messages in {ctx.guild.name}")
+    #             plt.ylabel("Names")
+    #             plt.xlabel("Message count")
 
-                # plt.tight_layout()
+    #             # plt.tight_layout()
 
-                plt.savefig("images/graph.png")
+    #             plt.savefig("images/graph.png")
 
-                await ctx.send(file=discord.File("images/graph.png"))
-        except Exception as e:
-            print(e)
+    #             await ctx.send(file=discord.File("images/graph.png"))
+    #     except Exception as e:
+    #         print(e)
 
 def setup(bot: commands.bot):
     bot.add_cog(Utility(bot))
