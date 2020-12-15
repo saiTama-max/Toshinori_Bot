@@ -96,35 +96,6 @@ class Utility(commands.Cog):
         except Exception as e:
             print(e)
 
-    @commands.command(brief='Get an answer to a query through the wolfram api', usage='t!wolfram [query]')
-    async def wolfram(self, ctx, *, query):
-        APPID = "AA9R93-WY7A2ARPR7"
-        QUERY = "http://api.wolframalpha.com/v2/{request}?{data}"
-
-
-
-        url_str = parse.urlencode({
-            "i": query,
-            "appid": APPID,
-        })
-
-        query_final = QUERY.format(request="simple", data=url_str)
-
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get(query_final) as response:
-                image_bytes = await response.read()
-
-
-                f = discord.File(BytesIO(image_bytes), filename="image.png")
-                image_url = "attachment://image.png"
-
-
-                final_emb = discord.Embed(color=discord.Color.orange())
-                final_emb.set_image(url=image_url)
-                
-                await ctx.send(embed=final_emb, file=f)
-
-
     @commands.command(brief='gives nice and motivational codes', usage='t!quote')
     async def quote(self, ctx):
         embed_quote = discord.Embed(title="Quote", description=random.choice(QUOTES), color=discord.Color.green())
