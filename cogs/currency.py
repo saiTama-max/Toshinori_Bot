@@ -17,9 +17,9 @@ DATABASE = os.getenv("DATABASE")
 PASSWORD = os.getenv("PASSWORD")
 
 common_qui = ['Engine', 'Voice', 'Gigantification', 'Hardening', 
-    'Jet', 'Regeneration', 'Zero Gravity', 'Somnambulist', 'Navel Laser', 'Tail']
-uncommon_qui = ['Air Propulsion', 'Electric', 'Shock Absorption', 'Warp gate',
-    'Black hole', 'Permeation', 'Pop Off', 'Acid', 'Clones', "Copy"]
+    'Jet', 'Zero Gravity', 'Somnambulist', 'Navel Laser', 'Tail']
+uncommon_qui = ['Air Propulsion', 'Electric', 'Warp gate',
+    'Black hole', 'Permeation', 'Pop Off', 'Acid', 'Clones']
 rare_qui = ['Dark Shadow', 'Cremation', 'Muscle Augmentation', 'Decay', 'Creation', 'Frog']
 legend_qui = ['AFO', 'OFA', 'HHHC', 'Explosion', 'Overhaul', 'Fierce Wings', 'Hell flame']
 
@@ -365,17 +365,22 @@ class Currency(commands.Cog):
 					desc = ''
 					delta = ''
 					when_added = list(when_added.values())[0] if when_added else 0
-					yen = list(yen.values())[0] if yen else 0
+					if yen:
+						yen = list(yen.values())[0]
+					else:
+						yen = 0
 
 					if not check:
-						yen = list(yen.values())[0] if yen else 0
+						if not yen:
+							yen = 0
 						await conn.execute("INSERT INTO quirks(current, userid, yen) VALUES($1, $2, $3)",
 										now, ctx.author.id, s_count)
 						message = f"Here is your yen!, Come back tomorrow!"
 						desc = f"You received {s_count}¥ and now have a total of {yen+s_count} yen!"
 						check = await conn.fetchrow("SELECT userid FROM quirks WHERE userid=$1", ctx.author.id)
 					if not when_added and check:
-						yen = list(yen.values())[0] if yen else 0
+						if not yen:
+							yen = 0
 						await conn.execute("UPDATE quirks SET current=$1, yen=$2 WHERE userid=$3",
 										now, s_count, ctx.author.id)
 						message = "Here is your yen!, Come back tomorrow!"

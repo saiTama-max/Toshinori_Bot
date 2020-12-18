@@ -1,13 +1,37 @@
 import discord
 import random
-import async_cleverbot as ac
+import json
 from discord.ext import commands
+from cogs.currency import USERNAME, HOST, DATABASE, PASSWORD
+import asyncio
+import asyncpg
 
+with open("resources/moves.json") as moves:
+	moves = json.load(moves)
+
+class Database:
+    def __init__(self):
+        self.conn = None
+        self.lock = asyncio.Lock()
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.connect())
+
+    async def connect(self):
+         self.conn = await asyncpg.connect(host=HOST, user=USERNAME, database=DATABASE, password=PASSWORD)
+
+    async def __aenter__(self):
+        await self.lock.acquire()
+        return self.conn
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        self.lock.release()
 
 class Fun(commands.Cog):
 
 	def __init__(self, bot: commands.bot):
 		self.bot = bot
+
+	db = Database()
 
 	@commands.command(aliases=['eightball', '8b'],
 					  brief='you can get answers to questions in 8ball', usage='t!8ball [question]')
@@ -67,6 +91,7 @@ class Fun(commands.Cog):
 	        message = f'{choose}\n{win if bot_choice == "rock" else lose}'
 
 	    await ctx.send(message)
+
 		
 def setup(bot: commands.bot):
 	bot.add_cog(Fun(bot))

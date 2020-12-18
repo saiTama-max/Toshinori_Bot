@@ -1,0 +1,464 @@
+{
+    "Engine": [{
+        "Name": "Recipro kick",
+        "Description": "Kick your opponent with a recipro boost",
+        "Damage": [3, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Recipro Extend",
+        "Description": "Extend your recipro boost, dealing damage",
+        "Damage": [10, 25],
+        "Cooldown": 4
+            }],
+
+    "Voice": [{
+        "Name": "Yell",
+        "Description": "Shout at a high pitch dealing medium damage",
+        "Damage": [8, 20],
+        "Cooldown": 1
+            }],
+
+    "Gigantification": [{
+        "Name": "Gigantic Stomp",
+        "Description": "Stomp on the opponent",
+        "Damage": [2, 11],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Gigantic Leap",
+        "Description": "Leap on the opponent with great force",
+        "Damage": [15, 22],
+        "Cooldown": 5
+            }],
+
+    "Hardening": [{
+        "Name": "Red Gauntlet",
+        "Description": "Punch the opponent with a hardened hand",
+        "Damage": [2, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Red Riot Unbreakable",
+        "Description": "Deal damage with even further hardening",
+        "Damage": [13, 23],
+        "Cooldown": 5
+            }],
+
+    "Jet": [{
+        "Name": "Jet kick",
+        "Description": "Land a kick on your opponent at jet speed",
+        "Damage": [2, 20],
+        "Cooldown": 1
+        }],
+
+    "Zero Gravity": [{
+        "Name": "Fling",
+        "Description": "Fling away your opponent dealing damage",
+        "Cooldown": 1,
+        "Damage": [2, 10]
+                },
+                {
+        "Name": "Meteor Shower",
+        "Description": "Land a lot of debris in a form of a shower on the opponent",
+        "Cooldown": 6,
+        "Damage": [15, 25]
+                }],
+
+    "Somnambulist": [{
+        "Name": "Somnam Gas",
+        "Description": "Release somnambulist gas on the opponent",
+        "Damage": [1, 10],
+        "Cooldown": 1
+                },
+                {
+        "Name": "Gas burst",
+        "Description": "Release a burst of gas dealing damage",
+        "Cooldown": 4,
+        "Damage": [12, 17]
+                }],
+
+    "Navel Laser": [{
+        "Name": "Navel Saber",
+        "Description": "Shoot a single beam of laser at the opponent",
+        "Cooldown": 1,
+        "Damage": [3, 10]
+                },
+                {
+        "Name": "Laser Buffet",
+        "Description": "Shoot multiple laser beams continuosly at the opponent",
+        "Damage": [10, 18],
+        "Cooldown": 4
+                }],
+
+    "Tail": [{
+        "Name": "Tail fist",
+        "Description": "Shape your tail in a fist and hit your opponent",
+        "Cooldown": 1,
+        "Damage": [1, 8]
+            },
+            {
+        "Name": "Tornado tail",
+        "Description": "Spin your tail in tornado style while dealing damage",
+        "Cooldown": 4,
+        "Damage": [10, 19]
+            }],
+
+    "Air Propulsion": [{
+        "Name": "Air cannon",
+        "Description": "Send a cannon of air pressure at the opponent",
+        "Damage": [5, 25],
+        "Cooldown": 1
+            }],
+
+    "Electric": [{
+        "Name": "Electric Shot",
+        "Description": "Shoot a bolt of Electricity at the opponent",
+        "Damage": [1, 8],
+        "Cooldown": 1
+                },
+                {
+        "Name": "1.3 Million Volts",
+        "Description": "Release a lot of Electricity dealing high damage, but it cannot be used often",
+        "Damage": [30, 35],
+        "Cooldown": 40
+            }],
+
+    "Warp gate": [{
+        "Name": "Warp Punch",
+        "Description": "Send a punch through a warp",
+        "Damage": [2, 9],
+        "Cooldown": 1
+                },
+                {
+        "Name": "Warp trap",
+        "Description": "Trap the opponent inside a warp dealing damages",
+        "Cooldown": 4,
+        "Damage": [10, 20]
+            }],
+
+    "Black hole": [{
+        "Name": "Black hole",
+        "Description": "Damage your opponent with a black hole",
+        "Damage": [5, 25],
+        "Cooldown": 1
+            }],
+
+    "Permeation": [{
+        "Name": "Permeation punch",
+        "Description": "Punch the opponent by getting behind them through permeation",
+        "Damage": [2, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Permeation combo",
+        "Description": "Perform a combo on the opponent",
+        "Damage": [10, 24],
+        "Cooldown": 5
+            }],
+
+    "Pop Off": [{
+        "Name": "Pop off ball",
+        "Description": "Throw a ball at the opponent",
+        "Damage": [1, 5],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Grape Rush",
+        "Description": "Make a rope from your head balls and hit the opponent with them",
+        "Damage": [10, 20],
+        "Cooldown": 4
+            }],
+            
+
+    "Acid": [{
+        "Name": "Acid Jet",
+        "Description": "Send a jet of acid at the opponent",
+        "Damage": [3, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Acid spray",
+        "Description": "Spray acid on the opponent",
+        "Damage": [10, 14],
+        "Cooldown": 3
+            },
+            {
+        "Name": "Acid veil",
+        "Description": "Throw up an acid veil damaging the opponent",
+        "Damage": [15, 24],
+        "Cooldown": 5
+            }],
+
+    "Clones": [{
+        "Name": "Clone",
+        "Description": "Send a clone to attack",
+        "Damage": [2, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Gigantic Electroplast",
+        "Description": "Create a huge clone and deal damage",
+        "Damage": [15, 25],
+        "Cooldown": 5
+            }],
+
+    "Dark Shadow": [{
+        "Name": "Twilight claws",
+        "Description": "Call Dark shadow and attack the opponent with claws",
+        "Damage": [3, 12],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Black-ops Arms",
+        "Description": "Call dark shadow and attack with Big arms",
+        "Damage": [13, 18],
+        "Cooldown": 2
+            },
+            {
+        "Name": "Dark abyss",
+        "Description": "attack by wrapping dark shadow around your body",
+        "Damage": [20, 30],
+        "Cooldown": 6
+            }],
+
+    "Cremation": [{
+        "Name": "Flame blast",
+        "Description": "Create blue flames and blast them at the opponent",
+        "Damage": [4, 13],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Flame spray",
+        "Description": "Spray blue flames from both your hands",
+        "Damage": [14, 19],
+        "Cooldown": 2
+            },
+            {
+        "Name": "Flame tornado",
+        "Description": "Create a tornado of blue flames",
+        "Damage": [20, 29],
+        "Cooldown": 6
+            }],
+
+    "Muscle Augmentation": [{
+        "Name": "Muscle Punch",
+        "Description": "Augment your Muscles in the arm and punch the opponent",
+        "Damage": [3, 11],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Muscle kick",
+        "Description": "Augment your muscles in the legs and kick the opponent",
+        "Damage": [4, 15],
+        "Cooldown": 2
+            },
+            {
+        "Name": "Full body Crush",
+        "Description": "Crush your opponent by Augmenting all your body muscles",
+        "Damage": [19, 28],
+        "Cooldown": 6
+            }],
+
+    "Decay": [{
+        "Name": "Decay touch",
+        "Description": "Touch your opponent and deal decay damage",
+        "Damage": [5, 14],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Decaying floor",
+        "Description": "Decay the floor causing damage nearby",
+        "Damage": [16, 25],
+        "Cooldown": 5
+            }],
+
+    "Creation": [{
+        "Name": "Sword Creation",
+        "Description": "create a sword and attack the opponent",
+        "Damage": [3, 13],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Lucky bag",
+        "Description": "Create a bag of useful items and attack the opponent with them one by one",
+        "Damage": [19, 26],
+        "Cooldown": 5
+            }],
+
+    "Frog": [{
+        "Name": "Tongue Lash",
+        "Description": "Lash your tongue at the opponent",
+        "Damage": [2, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Tongue fling",
+        "Description": "Grab your opponent by your tongue and fling them",
+        "Damage": [14, 19],
+        "Cooldown": 2
+            },
+            {
+        "Name": "Rapid tongue combo",
+        "Description": "Perform a tongue-hit combo rapidly on your opponent",
+        "Damage": [22, 29],
+        "Cooldown": 6
+            }],
+
+    "AFO": [{
+        "Name": "Red spiked claws",
+        "Description": "Send red spikes at the opponent",
+        "Damage": [3, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Wind cannon",
+        "Description": "create a wind cannon at shoot it at the opponent",
+        "Damage": [14, 20],
+        "Cooldown": 3
+            },
+            {
+        "Name": "Ultimate combo",
+        "Description": "Create an ultimate combination of quirks and hit the opponent",
+        "Damage": [30, 43],
+        "Cooldown": 15
+            }],
+
+    "OFA": [{
+        "Name": "Delaware smash",
+        "Description": "Create a small smash by the flick of your finger",
+        "Damage": [3, 10],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Detroit Smash",
+        "Description": "Smash the opponent with a medium sized punch",
+        "Damage": [5, 15],
+        "Cooldown": 2
+            },
+            {
+        "Name": "St.Louis smash",
+        "Description": "Smash the opponent by a kick",
+        "Damage": [16, 22],
+        "Cooldown": 3
+            },
+            {
+        "Name": "United States Of Smash",
+        "Description": "Create a **very** strong smash dealing high damage",
+        "Damage": [45, 55],
+        "Cooldown": 100
+            }],
+
+    "HHHC": [{
+        "Name": "Icicle barrage",
+        "Description": "Send a barrage of Icicles",
+        "Damage": [3, 12],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Glacier",
+        "Description": "Create a huge ice barrage",
+        "Damage": [12, 22],
+        "Cooldown": 3
+            },
+            {
+        "Name": "Fireball",
+        "Description": "Send a Fireball at the opponent",
+        "Damage": [3, 11],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Ice and Fire combo",
+        "Description": "Send a high damage combo of fire and ice",
+        "Damage": [30, 50],
+        "Cooldown": 50
+            }],
+
+    "Explosion": [{
+        "Name": "Blast",
+        "Description": "Blast an Explosion",
+        "Damage": [3, 14],
+        "Cooldown": 1
+            },
+            {
+        "Name": "AP shot",
+        "Description": "Narrow down your explosion and send a concentrated blast",
+        "Damage": [14, 22],
+        "Cooldown": 3
+            },
+            {
+        "Name": "Chained blasts",
+        "Description": "Send a chain of blasts",
+        "Damage": [20, 29],
+        "Cooldown": 5
+            },
+            {
+        "Name": "Howitzer impact",
+        "Description": "Spin rapidly to create force and hit the opponent",
+        "Damage": [30, 45],
+        "Cooldown": 50
+            }],
+
+    "Overhaul": [{
+        "Name": "Ground Spikes",
+        "Description": "Create spikes in the ground dealing damage",
+        "Damage": [3, 11],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Disassembling world",
+        "Description": "Create huge spikes outwards dealing damage",
+        "Damage": [15, 22],
+        "Cooldown": 4
+            },
+            {
+        "Name": "Disassembling touch",
+        "Description": "Touch your opponent dealing high damage",
+        "Damage": [35, 45],
+        "Cooldown": 100
+            }],
+
+    "Fierce Wings": [{
+        "Name": "Homing feathers",
+        "Description": "Send a bunch of sharp feathers at the opponent",
+        "Damage": [3, 11],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Feather blades",
+        "Description": "Create 2 blades out of your feathers",
+        "Damage": [15, 22],
+        "Cooldown": 3
+            },
+            {
+        "Name": "Feather rain",
+        "Description": "Rain down a lot of feathers dealing high damage",
+        "Damage": [24, 35],
+        "Cooldown": 20
+            }],
+
+    "Hell flame": [{
+        "Name": "Flashfire fist: Jetburn",
+        "Description": "Launch a punch bursting with flames",
+        "Damage": [3, 13],
+        "Cooldown": 1
+            },
+            {
+        "Name": "Hellfire ball",
+        "Description": "Launch an explosive flame ball",
+        "Damage": [14, 19],
+        "Cooldown": 2
+            },
+            {
+        "Name": "Flashfire fist: hell spider",
+        "Description": "Create a net of flames",
+        "Damage": [22, 29],
+        "Cooldown": 6
+            },
+            {
+        "Name": "Prominence Burn",
+        "Description": "Shoot out a beam of highly pressurized flames",
+        "Damage": [30, 50],
+        "Cooldown": 50
+            }]
+}
