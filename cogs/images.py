@@ -53,8 +53,8 @@ class Images(commands.Cog):
 
 
 
-	@commands.command(aliases=['spook', 'ghost'], brief='spookify a pfp', usage='t!ghostify [user (optional)]')
-	async def ghostify(self, ctx, dude: discord.Member=None):
+	@commands.command(aliases=['reversed', 'ghostify'], brief='invert a pfp', usage='t!invcert [user (optional)]')
+	async def invert(self, ctx, dude: discord.Member=None):
 	    dude = dude
 	    image_bytes = ctx.author.avatar_url.read() if not dude else dude.avatar_url.read()
 	    img = Image.open(BytesIO(await image_bytes))
@@ -67,7 +67,7 @@ class Images(commands.Cog):
 	    buffer.seek(0)
 	    file = discord.File(buffer, filename='spooky.png')
 
-	    await ctx.send(content="Here's your Ghostified avatar", file=file)
+	    await ctx.send(content="Here's your Inverted avatar", file=file)
 	@commands.command(brief='Get a triggered gif of a pfp', usage='t!trigger [user (optional)]', aliases=['triggered', 'angered'])
 	async def trigger(self, ctx, dude: discord.Member=None):
 	    user = ctx.author.avatar_url if not dude else dude.avatar_url

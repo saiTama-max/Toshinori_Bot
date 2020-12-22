@@ -251,8 +251,8 @@ class Utility(commands.Cog):
                 for i in msgs:
                     m_count.update({str(self.bot.get_user(list(i.values())[0]))[:-5]: list(i.values())[1]})
                 m_count = {k: m_count[k] for k in sorted(m_count, key=lambda y: m_count[y])}
-                msg_count = list(m_count.values())
-                name = list(m_count.keys())
+                msg_count = list(m_count.values())[::-1][:10][::-1]
+                name = list(m_count.keys())[::-1][:10][::-1]
 
                 fig = go.Figure(go.Bar(y=name,
                                        x=msg_count,

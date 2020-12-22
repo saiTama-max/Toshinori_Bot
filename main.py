@@ -47,7 +47,6 @@ async def reload(ctx, *, modules):
 			await ctx.send(f"{modules} reloaded")
 	except Exception as e:
 		await ctx.send(f":x: Cogs reloading unsuccessful, \n`{e}`")
-		raise e
 
 @toshi.command(brief="load the specified cogs, owner only",
 			   usage="t!reload [cog]")
@@ -59,7 +58,6 @@ async def load(ctx, *, modules):
 		await ctx.send(f"{modules} loaded")
 	except Exception as e:
 		await ctx.send(f":x: Cogs loading unsuccessful, \n`{e}`")
-		raise e
 
 @toshi.command(brief="unload the specified cogs, owner only",
 			   usage="t!reload [cog]")
@@ -78,7 +76,6 @@ async def unload(ctx, *, modules):
 			await ctx.send(f"{modules} unloaded")
 	except Exception as e:
 		await ctx.send(f":x: Cogs unloading unsuccessful, \n`{e}`")
-		raise e
 
 @toshi.event
 async def on_message(message):
