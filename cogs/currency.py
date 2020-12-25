@@ -485,6 +485,7 @@ class Currency(commands.Cog):
 					yen_count = 0
 				
 				if "common" in item:
+					item = "common spin"
 					spin_count = await conn.fetchrow("SELECT c_spins FROM quirks WHERE userid=$1", ctx.author.id)
 					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
 					if yen_count >= shop_items[item] * amount:
@@ -496,6 +497,7 @@ class Currency(commands.Cog):
 						await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
 				
 				elif "uncommon" in item:
+					item = "uncommon spin"
 					spin_count = await conn.fetchrow("SELECT uc_spins FROM quirks WHERE userid=$1", ctx.author.id)
 					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
 					if yen_count >= shop_items[item] * amount:
@@ -507,6 +509,7 @@ class Currency(commands.Cog):
 						await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
 
 				elif "rare" in item:
+					item = "rare spin"
 					spin_count = await conn.fetchrow("SELECT r_spins FROM quirks WHERE userid=$1", ctx.author.id)
 					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
 					if yen_count >= shop_items[item] * amount:
