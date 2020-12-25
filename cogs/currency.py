@@ -478,46 +478,46 @@ class Currency(commands.Cog):
 			try:
 				item = item.lower().strip("s")
 				yen_count = await conn.fetchrow("SELECT yen FROM quirks WHERE userid=$1", ctx.author.id)
-				if not any(item in i for i in shop_items):
-					await ctx.send("Invalid Item")
+				
+				yen_count = list(yen_count.values())[0] if yen_count else 0
+
+				if not yen_count:
+					yen_count = 0
+				
+				if "common" in item:
+					spin_count = await conn.fetchrow("SELECT c_spins FROM quirks WHERE userid=$1", ctx.author.id)
+					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
+					if yen_count >= shop_items[item] * amount:
+						new_yen = yen_count - amount * shop_items[item]
+						await conn.execute("UPDATE quirks SET yen=$1, c_spins=$3 WHERE userid=$2",
+						 				   new_yen, ctx.author.id, spin_count+amount)
+						await ctx.send(f"You bought {amount} common spins for {shop_items[item] * amount} yen")
+					else:
+						await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
+				
+				elif "uncommon" in item:
+					spin_count = await conn.fetchrow("SELECT uc_spins FROM quirks WHERE userid=$1", ctx.author.id)
+					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
+					if yen_count >= shop_items[item] * amount:
+						new_yen = yen_count - amount * shop_items[item]
+						await conn.execute("UPDATE quirks SET yen=$1, uc_spins=$3 WHERE userid=$2",
+						 				   new_yen, ctx.author.id, spin_count+amount)
+						await ctx.send(f"You bought {amount} uncommon spins for {shop_items[item] * amount} yen")
+					else:
+						await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
+
+				elif "rare" in item:
+					spin_count = await conn.fetchrow("SELECT r_spins FROM quirks WHERE userid=$1", ctx.author.id)
+					spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
+					if yen_count >= shop_items[item] * amount:
+						new_yen = yen_count - amount * shop_items[item]
+						await conn.execute("UPDATE quirks SET yen=$1, r_spins=$3 WHERE userid=$2",
+						 				   new_yen, ctx.author.id, spin_count+amount)
+						await ctx.send(f"You bought {amount} rare spins for {shop_items[item] * amount} yen")
+					else:
+						await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
 				else:
-					yen_count = list(yen_count.values())[0] if yen_count else 0
-
-					if not yen_count:
-						yen_count = 0
-					
-					if "common" in item:
-						spin_count = await conn.fetchrow("SELECT c_spins FROM quirks WHERE userid=$1", ctx.author.id)
-						spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
-						if yen_count >= shop_items[item] * amount:
-							new_yen = yen_count - amount * shop_items[item]
-							await conn.execute("UPDATE quirks SET yen=$1, c_spins=$3 WHERE userid=$2",
-							 				   new_yen, ctx.author.id, spin_count+amount)
-							await ctx.send(f"You bought {amount} common spins for {shop_items[item] * amount} yen")
-						else:
-							await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
-					
-					elif "uncommon" in item:
-						spin_count = await conn.fetchrow("SELECT uc_spins FROM quirks WHERE userid=$1", ctx.author.id)
-						spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
-						if yen_count >= shop_items[item] * amount:
-							new_yen = yen_count - amount * shop_items[item]
-							await conn.execute("UPDATE quirks SET yen=$1, uc_spins=$3 WHERE userid=$2",
-							 				   new_yen, ctx.author.id, spin_count+amount)
-							await ctx.send(f"You bought {amount} uncommon spins for {shop_items[item] * amount} yen")
-						else:
-							await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
-
-					elif "rare" in item:
-						spin_count = await conn.fetchrow("SELECT r_spins FROM quirks WHERE userid=$1", ctx.author.id)
-						spin_count = list(spin_count.values())[0] if list(spin_count.values())[0] else 0
-						if yen_count >= shop_items[item] * amount:
-							new_yen = yen_count - amount * shop_items[item]
-							await conn.execute("UPDATE quirks SET yen=$1, r_spins=$3 WHERE userid=$2",
-							 				   new_yen, ctx.author.id, spin_count+amount)
-							await ctx.send(f"You bought {amount} rare spins for {shop_items[item] * amount} yen")
-						else:
-							await ctx.send(f"You don't have enough yen to buy this, you need {amount*shop_items[item]-yen_count}¥ more yen")
+					await ctx.send("Invalid item :((")
 			except Exception as e:
 				print(e)
 
