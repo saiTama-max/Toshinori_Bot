@@ -53,7 +53,7 @@ class Images(commands.Cog):
 
 
 
-    @commands.command(aliases=['reversed', 'ghostify'], brief='invert a pfp', usage='t!invcert [user (optional)]')
+    @commands.command(aliases=['reversed', 'ghostify'], brief='invert a pfp', usage='t!invert [user (optional)]')
     async def invert(self, ctx, dude: discord.Member=None):
         dude = dude
         image_bytes = ctx.author.avatar_url.read() if not dude else dude.avatar_url.read()
