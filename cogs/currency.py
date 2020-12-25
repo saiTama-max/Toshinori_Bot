@@ -478,7 +478,7 @@ class Currency(commands.Cog):
 			try:
 				item = item.lower().strip("s")
 				yen_count = await conn.fetchrow("SELECT yen FROM quirks WHERE userid=$1", ctx.author.id)
-				if any(item not in i for i in shop_items):
+				if not any(item in i for i in shop_items):
 					await ctx.send("Invalid Item")
 				else:
 					yen_count = list(yen_count.values())[0] if yen_count else 0
